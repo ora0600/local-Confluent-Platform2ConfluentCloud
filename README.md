@@ -167,9 +167,19 @@ connect-distributed -daemon delta_configs/connect-ccloud.delta
 If you are running on AWS (with mentioned terraform script), then please start as followed:
 ```BASH
 # start REST to connect Confluent clouod
-sudo software/confluent-5.3.0/bin/kafka-rest-start ./ccloud_kafka-rest.properties
-sudo software/confluent-5.3.0/bin/ksql-server-start ccloud_ksql-server.properties
+sudo software/confluent-5.3.0/bin/kafka-rest-start -daemon ./ccloud_kafka-rest.properties
+sudo software/confluent-5.3.0/bin/ksql-server-start -daemon ccloud_ksql-server.properties
+# or if used the generation tool
+sudo software/confluent-5.3.0/bin/ksql-server-start -daemon delta_configs/ksql-server-ccloud.delta
+sudo software/confluent-5.3.0/bin/control-center-start -daemon delta_configs/control-center-ccloud.delta 
+sudo software/confluent-5.3.0/bin/connect-distributed -daemon delta_configs/connect-ccloud.delta
 ```
+to access the control center via SSH you have to tunnel:
+```
+ssh -i hackathon-temp-key.pem -N -L 9022:ip-<Priv IP>.<REGION>.compute.internal ec2-user@<Pub IP>
+```
+and than goto your browser and enter http://localhos:9022
+
 ## Play around with KSQL
 start your local ksql interactive tool and enter some code:
 ```
