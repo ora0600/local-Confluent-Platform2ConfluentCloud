@@ -197,7 +197,7 @@ offset.flush.interval.ms=10000
 
 to access the control center via SSH you have to tunnel:
 ```
-ssh -i hackathon-temp-key.pem -N -L 9022:ip-<Priv IP>.<REGION>.compute.internal ec2-user@<Pub IP>
+ssh -i hackathon-temp-key.pem -N -L 9022:ip-Priv IP.REGION.compute.internal ec2-user@Pub IP
 ```
 and than goto your browser and enter http://localhos:9022
 
