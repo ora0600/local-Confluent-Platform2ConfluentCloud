@@ -131,7 +131,7 @@ ksql.schema.registry.basic.auth.user.info=<SCHEMAREG-API-KEY>:<SCHEMAREQ-API-SEC
 ksql.schema.registry.url=<SCHEMA_REG_URL>" > ccloud_ksql-server.properties
 ```
 
-## Connect Clonfluent Cloud with local REST Proxy
+## Connect Confluent Cloud with local REST Proxy
 Create your own ccloud_kafka-rest.properties and replace <SCHEMA_REGISTRY_API_KEY>:<SCHEMA_REGISTRY_API_SECRET>  <CCLOUD_API_KEY> <CCLOUD_API_SECRET> <CCLOUD_BOOTSTRAP_SERVER>
 ```BASH
 echo "id=kafka-rest-with-ccloud
@@ -166,15 +166,15 @@ connect-standalone delta_configs/connect-ccloud.delta filestream.properties
 ```
 If you are running on AWS (with mentioned terraform script), then please start as followed:
 ```BASH
-# start REST to connect Confluent clouod
+# start REST to connect Confluent cloud
 sudo software/confluent-5.3.0/bin/kafka-rest-start -daemon ./ccloud_kafka-rest.properties
 sudo software/confluent-5.3.0/bin/ksql-server-start -daemon ccloud_ksql-server.properties
-# or if used the generation tool
+# or if you use the generation tool
 sudo software/confluent-5.3.0/bin/ksql-server-start -daemon delta_configs/ksql-server-ccloud.delta
 sudo software/confluent-5.3.0/bin/control-center-start -daemon delta_configs/control-center-ccloud.delta 
 sudo software/confluent-5.3.0/bin/connect-standalone delta_configs/connect-ccloud.delta filestream.properties
 ```
-HINT:
+### HINT: standalone connector
 If you start the connect-standalone, than some parameters are missing (distributed I did not check):
 ```
 echo "# missing values
