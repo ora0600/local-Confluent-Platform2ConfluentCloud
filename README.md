@@ -174,6 +174,27 @@ sudo software/confluent-5.3.0/bin/ksql-server-start -daemon delta_configs/ksql-s
 sudo software/confluent-5.3.0/bin/control-center-start -daemon delta_configs/control-center-ccloud.delta 
 sudo software/confluent-5.3.0/bin/connect-distributed -daemon delta_configs/connect-ccloud.delta
 ```
+HINT:
+If you start the connect distributed, than some parameters are missing (standalone I did check):
+```
+echo "# missing values
+group.id=connect-cluster
+key.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter=org.apache.kafka.connect.json.JsonConverter
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
+# Connect clusters create three topics to manage offsets, configs, and status
+# information. Note that these contribute towards the total partition limit quota.
+offset.storage.topic=connect-offsets
+offset.storage.replication.factor=3
+offset.storage.partitions=3
+config.storage.topic=connect-configs
+config.storage.replication.factor=3
+status.storage.topic=connect-status
+status.storage.replication.factor=3
+offset.flush.interval.ms=10000
+# end missing values" >> delta_configs/connect-ccloud.delta
+
 to access the control center via SSH you have to tunnel:
 ```
 ssh -i hackathon-temp-key.pem -N -L 9022:ip-<Priv IP>.<REGION>.compute.internal ec2-user@<Pub IP>
