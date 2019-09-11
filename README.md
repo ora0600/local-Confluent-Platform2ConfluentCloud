@@ -60,7 +60,7 @@ ccloud kafka topic produce myusers
 ccloud kafka topic consume -b myusers
 ```
 ## Prepare your local installation to connect Confluent Cloud
-To work with cloud we need some more propertery parameters than to work local. To make it easier Confluent has offered a script to generate all the properties file. [Please Github cp-all-in-one-cloud](https://github.com/confluentinc/cp-docker-images/tree/5.3.0-post/examples/cp-all-in-one-cloud)
+To work with cloud we need some more propertery parameters than to work local. To make it easier Confluent has offered a script to generate all the properties file. [Please go to Github ccloud](https://github.com/confluentinc/examples/tree/5.3.0-post/ccloud)
 
 I did copy the script into Confluent Cloud Platform AWS setup, so that you can execute it, if you want ([CP52 in AWS](https://github.com/ora0600/cpe53-singlenodeonaws)).
 What you have to do?
@@ -80,7 +80,7 @@ schema.registry.url=https://<Schema Registry Host>
 ```
 Then you have to generate the files. 
 ```
-./ccloud-generate-env-vars.sh $HOME/.ccloud/config
+./ccloud-generate-cp-configs.sh $HOME/.ccloud/config
 ```
 In the directory ./delta_configs/ all generated property files are stored.
 
