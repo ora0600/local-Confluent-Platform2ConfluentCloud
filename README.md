@@ -162,7 +162,7 @@ ksql-server-start -daemon ccloud_ksql-server.properties
 # or if used the generation tool
 ksql-server-start -daemon delta_configs/ksql-server-ccloud.delta
 control-center-start -daemon delta_configs/control-center-ccloud.delta 
-connect-distributed -daemon delta_configs/connect-ccloud.delta
+connect-standalone delta_configs/connect-ccloud.delta filestream.properties
 ```
 If you are running on AWS (with mentioned terraform script), then please start as followed:
 ```BASH
@@ -172,10 +172,10 @@ sudo software/confluent-5.3.0/bin/ksql-server-start -daemon ccloud_ksql-server.p
 # or if used the generation tool
 sudo software/confluent-5.3.0/bin/ksql-server-start -daemon delta_configs/ksql-server-ccloud.delta
 sudo software/confluent-5.3.0/bin/control-center-start -daemon delta_configs/control-center-ccloud.delta 
-sudo software/confluent-5.3.0/bin/connect-distributed -daemon delta_configs/connect-ccloud.delta
+sudo software/confluent-5.3.0/bin/connect-standalone delta_configs/connect-ccloud.delta filestream.properties
 ```
 HINT:
-If you start the connect distributed, than some parameters are missing (standalone I did check):
+If you start the connect-standalone, than some parameters are missing (distributed I did not check):
 ```
 echo "# missing values
 group.id=connect-cluster
@@ -193,9 +193,20 @@ config.storage.replication.factor=3
 status.storage.topic=connect-status
 status.storage.replication.factor=3
 offset.flush.interval.ms=10000
+offset.storage.file.filename=/home/ec2-user/offset
 # end missing values" >> delta_configs/connect-ccloud.delta
 
-to access the control center via SSH you have to tunnel:
+# Standalone Connect to read from file, first create topic
+ccloud kafka topic create cmtest
+# The Filestream Property to read from file into Topic cmtest looks like this
+echo "# These are standard kafka connect parameters, need for ALL connectors
+name=cmtest
+connector.class=org.apache.kafka.connect.file.FileStreamSourceConnector
+tasks.max=1
+file=/home/ec2-user/test.csv
+topic=cmtest" > filestream.properties
+```
+To access the control center via SSH you have to tunnel:
 ```
 ssh -i hackathon-temp-key.pem -N -L 9022:ip-Priv IP.REGION.compute.internal ec2-user@Pub IP
 ```
