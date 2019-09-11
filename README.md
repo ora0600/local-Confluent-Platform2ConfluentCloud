@@ -156,9 +156,13 @@ schema.registry.url=<SCHEMA_REG_URL>" > ccloud_kafka-rest.properties
 First the REST Proxy and then the KSQL Server.
 ```BASH
 # start REST Proxy local with connection to CCLOUD
-kafka-rest-start ccloud_kafka-rest.properties
+kafka-rest-start -daemon ccloud_kafka-rest.properties
 # start local ksql-server with connection to CCLOUD
-ksql-server-start ccloud_ksql-server.properties
+ksql-server-start -daemon ccloud_ksql-server.properties
+# or if used the generation tool
+ksql-server-start -daemon delta_configs/ksql-server-ccloud.delta
+control-center-start -daemon delta_configs/control-center-ccloud.delta 
+connect-distributed -daemon delta_configs/connect-ccloud.delta
 ```
 If you are running on AWS (with mentioned terraform script), then please start as followed:
 ```BASH
