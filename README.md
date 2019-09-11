@@ -26,7 +26,7 @@ If the confluent cloud setup is running you can start to install and configure t
 Do some more tests with cli and confluent cloud, so that you are pretty sure that confluent cloud is running well.
 ```BASH
 # install cloud cli
-curl -L https://cnfl.io/ccloud-cli | sh -s -- -b /usr/local/bin
+sudo curl -L https://cnfl.io/ccloud-cli | sh -s -- -b /usr/local/bin
 
 # login : Logins come from Perry
 ccloud login --url https://confluent.cloud
