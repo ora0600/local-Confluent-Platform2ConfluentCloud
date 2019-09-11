@@ -215,7 +215,7 @@ and than goto your browser and enter http://localhos:9022
 ## Play around with KSQL
 start your local ksql interactive tool and enter some code:
 ```
-ksql
+sudo software/confluent-5.3.0/bin/ksql
 ksql> list topics
 ksql> SET 'auto.offset.reset' = 'earliest';
 ksql> CREATE STREAM myusers (userdata VARCHAR)  WITH (KAFKA_TOPIC='myusers', VALUE_FORMAT='DELIMITED');
