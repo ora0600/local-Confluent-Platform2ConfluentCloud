@@ -210,7 +210,13 @@ To access the control center via SSH you have to tunnel:
 ```
 ssh -i hackathon-temp-key.pem -N -L 9022:ip-Priv IP.REGION.compute.internal ec2-user@Pub IP
 ```
-and than goto your browser and enter http://localhos:9022
+and than goto your browser and enter http://localhost:9022
+
+If you want to use KSQL in Control Center, then you need additionally changes:
+  * Control Center is creating a Websocket connection to KSQL Server. That's why you need to add a confluent.controlcenter.ksql.advertised.url=http://PUBLIC-IP:8088 because http://localhost:8088 (default) Control Center will not find in an AWS setup
+  * In that case it is better to open in your AWS security group for that compute instance Ports 9021 and 8088
+  * Then ssh tunneling is not necessary anymore
+  
 
 ## Play around with KSQL
 start your local ksql interactive tool and enter some code:
